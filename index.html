@@ -78,7 +78,7 @@
 <main class="flex-grow flex flex-col relative px-margin-mobile md:px-margin-desktop py-20">
     
     <!-- Top Half: Headline & Spheres -->
-    <div class="flex flex-col items-center justify-center min-h-[300px] relative">
+    <div id="hero-section" class="flex flex-col items-center justify-center min-h-[300px] relative">
         <h1 class="font-headline-xl text-5xl md:text-[96px] text-primary-container drop-shadow-[0_0_15px_rgba(229,9,20,0.3)] letter-collapse text-center" id="main-headline">
             FOLKETS BIO AI ASSISTANT
         </h1>
@@ -118,6 +118,8 @@
 <script>
     document.getElementById('action-button').addEventListener('click', async function() {
         const actionContainer = document.getElementById('action-container');
+        const actionArea = document.getElementById('action-area');
+        const heroSection = document.getElementById('hero-section');
         const statusText = document.getElementById('status-text');
         const statusIndicator = document.getElementById('status-indicator');
         const mainHeadline = document.getElementById('main-headline');
@@ -156,22 +158,27 @@
             if (!response.ok) throw new Error('Workflow Timeout');
             const data = await response.json();
 
-            // 3. Render and Reveal Results
+            // 3. Render Results
             renderResults(data);
             
-            // Transition from Spheres to Results
-            spheresContainer.classList.add('opacity-0');
+            // --- THE GAP KILLER LOGIC ---
+            // Hide the hero and action areas completely to close the gap
+            heroSection.classList.add('hidden');
+            actionArea.classList.add('hidden');
+
             statusText.textContent = 'IDEAS CRYSTALLIZED';
             statusIndicator.classList.remove('animate-ping');
             statusIndicator.classList.add('bg-green-500');
 
+            // Show results and tighten the top margin
+            resultsDisplay.classList.remove('hidden');
+            resultsDisplay.classList.replace('mt-20', 'mt-4');
+
             setTimeout(() => {
-                spheresContainer.classList.add('hidden');
-                resultsDisplay.classList.remove('hidden');
                 void resultsDisplay.offsetWidth;
                 resultsDisplay.classList.remove('opacity-0');
                 resultsDisplay.classList.add('opacity-100');
-            }, 500);
+            }, 50);
 
         } catch (error) {
             console.error("Agent Error:", error);
@@ -182,7 +189,6 @@
 
     function renderResults(data) {
         const container = document.getElementById('results-display');
-        // We assume the data structure: { ideas: [...] }
         container.innerHTML = data.ideas.map(idea => `
             <div class="border-l-2 border-primary-container pl-8 py-4 bg-surface-container-low/30 rounded-r-xl transition-all hover:bg-surface-container-low/50">
                 <h2 class="font-headline-md text-4xl text-primary-container mb-2 tracking-wide uppercase">${idea.event_title}</h2>
