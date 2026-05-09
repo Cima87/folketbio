@@ -1,203 +1,132 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>FOLKETS BIO AI ASSISTANT</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Hanken+Grotesk:wght@400;600&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>FOLKETS BIO AI ASSISTANT</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "on-surface-variant": "#e9bcb6",
-                        "on-tertiary-fixed-variant": "#474746",
-                        "on-secondary-fixed": "#1a1c1c",
-                        "on-primary-fixed": "#410001",
-                        "on-primary-container": "#fff7f6",
-                        "inverse-surface": "#e2e2e2",
-                        "on-error-container": "#ffdad6",
-                        "primary-fixed-dim": "#ffb4aa",
-                        "on-secondary": "#2f3131",
-                        "error-container": "#93000a",
-                        "on-surface": "#e2e2e2",
-                        "on-secondary-fixed-variant": "#454747",
                         "background": "#131313",
-                        "primary": "#ffb4aa",
-                        "surface-container-high": "#2a2a2a",
-                        "tertiary-fixed-dim": "#c8c6c5",
-                        "inverse-on-surface": "#303030",
-                        "tertiary-fixed": "#e5e2e1",
                         "on-background": "#e2e2e2",
-                        "secondary-container": "#454747",
-                        "on-primary-fixed-variant": "#930007",
-                        "error": "#ffb4ab",
-                        "surface-container-low": "#1b1b1b",
-                        "on-secondary-container": "#b4b5b5",
                         "primary-container": "#e50914",
-                        "outline-variant": "#5e3f3b",
-                        "outline": "#af8782",
-                        "secondary-fixed-dim": "#c6c6c7",
-                        "surface-variant": "#353535",
-                        "on-error": "#690005",
-                        "on-tertiary": "#313030",
-                        "secondary-fixed": "#e2e2e2",
-                        "secondary": "#c6c6c7",
-                        "surface-container": "#1f1f1f",
-                        "surface-tint": "#ffb4aa",
-                        "on-tertiary-fixed": "#1c1b1b",
-                        "surface-bright": "#393939",
-                        "surface-dim": "#131313",
-                        "tertiary": "#c8c6c5",
-                        "inverse-primary": "#c0000c",
-                        "surface-container-highest": "#353535",
-                        "surface-container-lowest": "#0e0e0e",
-                        "on-tertiary-container": "#fbf8f7",
-                        "on-primary": "#690003",
-                        "surface": "#131313",
-                        "tertiary-container": "#737272",
-                        "primary-fixed": "#ffdad5"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "margin-desktop": "64px",
-                        "gutter": "24px",
-                        "container-max-width": "1200px",
-                        "margin-mobile": "16px",
-                        "unit": "8px"
+                        "on-primary-container": "#fff7f6",
+                        "surface-container-low": "#1b1b1b",
+                        "outline": "#af8782"
                     },
                     "fontFamily": {
                         "headline-md": ["Bebas Neue"],
-                        "label-sm": ["Hanken Grotesk"],
-                        "body-md": ["Hanken Grotesk"],
-                        "headline-lg": ["Bebas Neue"],
+                        "headline-xl": ["Bebas Neue"],
                         "body-lg": ["Hanken Grotesk"],
-                        "headline-lg-mobile": ["Bebas Neue"],
-                        "headline-xl": ["Bebas Neue"]
+                        "label-sm": ["Hanken Grotesk"]
                     },
-                    "fontSize": {
-                        "headline-md": ["24px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "400" }],
-                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.15em", "fontWeight": "600" }],
-                        "body-md": ["16px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
-                        "headline-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "0.08em", "fontWeight": "400" }],
-                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
-                        "headline-lg-mobile": ["32px", { "lineHeight": "1.1", "letterSpacing": "0.08em", "fontWeight": "400" }],
-                        "headline-xl": ["72px", { "lineHeight": "1.1", "letterSpacing": "0.1em", "fontWeight": "400" }]
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
                     }
                 }
             }
         }
     </script>
-<style>
+    <style>
         body {
-            background-color: #000000; /* Overriding for pure black cinematic feel */
+            background-color: #000000;
             background-image: 
                 linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 64px 64px;
         }
-
         @keyframes bounce-sphere {
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-40px) scale(0.95); }
         }
-        
         .bouncing-sphere {
             animation: bounce-sphere 1.2s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
         }
-        
-        .bouncing-sphere:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .letter-collapse {
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .bouncing-sphere:nth-child(2) { animation-delay: 0.15s; }
+        .letter-collapse { transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col text-on-background relative overflow-x-hidden">
-<!-- TopAppBar -->
-<header class="bg-background dark:bg-background w-full top-0 z-50">
-<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-6">
-<div class="font-headline-md text-headline-md tracking-widest text-primary-container dark:text-primary-container">
-                FOLKETS BIO AI
+
+<header class="bg-background w-full top-0 z-50">
+    <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-6">
+        <div class="font-headline-md text-headline-md tracking-widest text-primary-container">
+            FOLKETS BIO AI
+        </div>
+        <div class="flex items-center gap-gutter">
+            <!-- Status Indicator -->
+            <div class="flex items-center gap-3 mr-4">
+                <span id="status-indicator" class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
+                <span id="status-text" class="text-[10px] tracking-[0.4em] uppercase opacity-70 transition-opacity duration-300">System Online</span>
             </div>
-<div class="flex items-center gap-gutter">
-<button class="text-primary-container dark:text-primary-container hover:text-primary-container transition-all duration-300 scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">grid_view</span>
-</button>
-<button class="text-primary-container dark:text-primary-container hover:text-primary-container transition-all duration-300 scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
-</button>
-</div>
-</div>
+            <button class="text-primary-container scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">grid_view</span>
+            </button>
+        </div>
+    </div>
 </header>
-<!-- Main Content Area -->
-<main class="flex-grow flex flex-col items-center justify-center relative px-margin-mobile md:px-margin-desktop">
-<!-- Center Stage -->
-<div class="flex flex-col items-center justify-center space-y-16 text-center max-w-4xl w-full z-10 relative min-h-[400px]">
-<!-- Agentic Status Indicator -->
-<div class="flex items-center space-x-3 mb-8 transition-all duration-500" id="status-container">
-<div class="w-2 h-2 bg-primary-container rounded-full animate-pulse shadow-[0_0_10px_rgba(229,9,20,0.8)]" id="status-indicator"></div>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.2em] transition-all duration-500" id="status-text">System Online</span>
-</div>
-<!-- Main Headline -->
-<h1 class="font-headline-xl text-headline-xl md:text-[96px] text-primary-container drop-shadow-[0_0_15px_rgba(229,9,20,0.3)] letter-collapse absolute top-[120px] left-1/2 -translate-x-1/2 w-full" id="main-headline">
-                FOLKETS BIO AI ASSISTANT
-            </h1>
-<!-- Spheres Animation (Hidden Initially) -->
-<div class="hidden justify-center items-center gap-8 h-32 absolute top-[150px] left-1/2 -translate-x-1/2 opacity-0 transition-opacity duration-700" id="spheres-container">
-<div class="w-16 h-16 rounded-full bg-primary-container shadow-[0_0_40px_rgba(229,9,20,0.8)] bouncing-sphere relative after:absolute after:inset-0 after:rounded-full after:bg-white/20 after:blur-sm"></div>
-<div class="w-16 h-16 rounded-full bg-primary-container shadow-[0_0_40px_rgba(229,9,20,0.8)] bouncing-sphere relative after:absolute after:inset-0 after:rounded-full after:bg-white/20 after:blur-sm"></div>
-</div>
-<!-- Prompt Input / Primary Action Area -->
-<div class="w-full max-w-2xl mt-[200px] relative group transition-all duration-500" id="action-container">
-<button class="w-full bg-primary-container text-on-primary-container py-4 px-8 border border-primary-container rounded-none font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300 shadow-[0_0_20px_rgba(229,9,20,0.15)] group-hover:shadow-[0_0_30px_rgba(229,9,20,0.3)] flex items-center justify-center space-x-3" id="action-button">
-<span class="material-symbols-outlined text-[18px]">bolt</span>
-<span>Brainstorm programming ideas</span>
-</button>
-</div>
-</div>
+
+<main class="flex-grow flex flex-col relative px-margin-mobile md:px-margin-desktop py-20">
+    
+    <!-- Top Half: Headline & Spheres -->
+    <div class="flex flex-col items-center justify-center min-h-[300px] relative">
+        <h1 class="font-headline-xl text-5xl md:text-[96px] text-primary-container drop-shadow-[0_0_15px_rgba(229,9,20,0.3)] letter-collapse text-center" id="main-headline">
+            FOLKETS BIO AI ASSISTANT
+        </h1>
+
+        <!-- Spheres Animation -->
+        <div class="hidden justify-center items-center gap-8 h-32 absolute opacity-0 transition-opacity duration-700" id="spheres-container">
+            <div class="w-12 h-12 rounded-full bg-primary-container shadow-[0_0_40px_rgba(229,9,20,0.8)] bouncing-sphere relative after:absolute after:inset-0 after:rounded-full after:bg-white/20 after:blur-sm"></div>
+            <div class="w-12 h-12 rounded-full bg-primary-container shadow-[0_0_40px_rgba(229,9,20,0.8)] bouncing-sphere relative after:absolute after:inset-0 after:rounded-full after:bg-white/20 after:blur-sm"></div>
+        </div>
+    </div>
+
+    <!-- Bottom Half: Primary Action -->
+    <div class="flex items-center justify-center w-full mt-12" id="action-area">
+        <div class="w-full max-w-2xl relative group transition-all duration-500" id="action-container">
+            <button class="w-full bg-primary-container text-on-primary-container py-5 px-8 border border-primary-container rounded-none font-label-sm text-label-sm uppercase tracking-[0.3em] hover:bg-red-700 transition-all duration-300 shadow-[0_0_20px_rgba(229,9,20,0.15)] flex items-center justify-center space-x-3" id="action-button">
+                <span class="material-symbols-outlined text-[18px]">bolt</span>
+                <span>Brainstorm programming ideas</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- RESULTS SECTION -->
+    <div id="results-display" class="w-full max-w-4xl mx-auto mt-20 space-y-16 hidden opacity-0 transition-opacity duration-1000">
+        <!-- AI Data Injected Here -->
+    </div>
+
 </main>
-<!-- Footer -->
-<footer class="bg-background dark:bg-background border-t border-white/10 w-full bottom-0 z-50 mt-auto">
-<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-12 gap-gutter">
-<div class="font-label-sm text-label-sm text-on-secondary-fixed-variant dark:text-on-secondary-fixed-variant">
-                © 2024 FOLKETS BIO. POWERED BY AGENTIC INTELLIGENCE.
-            </div>
-<nav class="flex flex-wrap justify-center md:justify-end gap-gutter">
-<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant dark:text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-200 opacity-70 hover:opacity-100 transition-opacity" href="#">
-                    SYSTEM STATUS
-                </a>
-<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant dark:text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-200 opacity-70 hover:opacity-100 transition-opacity" href="#">
-                    PROTOCOL
-                </a>
-<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant dark:text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-200 opacity-70 hover:opacity-100 transition-opacity" href="#">
-                    ARCHIVE
-                </a>
-</nav>
-</div>
+
+<footer class="bg-background border-t border-white/10 w-full mt-auto">
+    <div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-12">
+        <div class="font-label-sm text-[10px] tracking-widest text-outline uppercase opacity-50">
+            © 2026 FOLKETS BIO. POWERED BY AGENTIC INTELLIGENCE.
+        </div>
+    </div>
 </footer>
+
 <script>
-    document.getElementById('action-button').addEventListener('click', function() {
+    document.getElementById('action-button').addEventListener('click', async function() {
         const actionContainer = document.getElementById('action-container');
         const statusText = document.getElementById('status-text');
         const statusIndicator = document.getElementById('status-indicator');
         const mainHeadline = document.getElementById('main-headline');
         const spheresContainer = document.getElementById('spheres-container');
+        const resultsDisplay = document.getElementById('results-display');
 
-        // Fade out button
+        // 1. Start UI Animation
         actionContainer.classList.add('opacity-0', 'pointer-events-none');
         
-        // Update Status
         statusText.style.opacity = '0';
         setTimeout(() => {
             statusText.textContent = 'SYNTHESIZING NEURAL PATHWAYS...';
@@ -206,19 +135,82 @@
             statusIndicator.classList.add('animate-ping');
         }, 300);
 
-        // Collapse Headline
         mainHeadline.classList.add('scale-y-0', 'opacity-0', 'blur-sm');
         
-        // Show Spheres
         setTimeout(() => {
             mainHeadline.classList.add('hidden');
             spheresContainer.classList.remove('hidden');
             spheresContainer.classList.add('flex');
-            // Trigger reflow for transition
             void spheresContainer.offsetWidth;
             spheresContainer.classList.remove('opacity-0');
             spheresContainer.classList.add('opacity-100');
         }, 600);
+
+        // 2. Trigger n8n Workflow
+        try {
+            const response = await fetch('https://cima87.app.n8n.cloud/webhook/trigger-zita-agents', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!response.ok) throw new Error('Workflow Timeout');
+            const data = await response.json();
+
+            // 3. Render and Reveal Results
+            renderResults(data);
+            
+            // Transition from Spheres to Results
+            spheresContainer.classList.add('opacity-0');
+            statusText.textContent = 'IDEAS CRYSTALLIZED';
+            statusIndicator.classList.remove('animate-ping');
+            statusIndicator.classList.add('bg-green-500');
+
+            setTimeout(() => {
+                spheresContainer.classList.add('hidden');
+                resultsDisplay.classList.remove('hidden');
+                void resultsDisplay.offsetWidth;
+                resultsDisplay.classList.remove('opacity-0');
+                resultsDisplay.classList.add('opacity-100');
+            }, 500);
+
+        } catch (error) {
+            console.error("Agent Error:", error);
+            statusText.textContent = 'SYSTEM ERROR - CHECK CONNECTION';
+            statusIndicator.classList.add('bg-orange-500');
+        }
     });
+
+    function renderResults(data) {
+        const container = document.getElementById('results-display');
+        // We assume the data structure: { ideas: [...] }
+        container.innerHTML = data.ideas.map(idea => `
+            <div class="border-l-2 border-primary-container pl-8 py-4 bg-surface-container-low/30 rounded-r-xl transition-all hover:bg-surface-container-low/50">
+                <h2 class="font-headline-md text-4xl text-primary-container mb-2 tracking-wide uppercase">${idea.event_title}</h2>
+                <p class="text-xs tracking-[0.3em] uppercase text-outline mb-6 font-semibold italic">"${idea.marketing_hook}"</p>
+                <p class="text-body-lg text-on-background/80 leading-relaxed mb-8 max-w-2xl">${idea.concept_summary}</p>
+                
+                <div class="grid md:grid-cols-2 gap-10 border-t border-white/5 pt-8">
+                    <div>
+                        <h3 class="font-headline-md text-xl mb-4 tracking-widest opacity-90">CINEMATIC AUDIT: APPROVED</h3>
+                        <ul class="space-y-4">
+                            ${idea.film_recommendations.map(film => `
+                                <li class="text-sm">
+                                    <span class="text-primary-container font-bold mr-2">/</span>
+                                    <strong class="uppercase text-white">${film.title}</strong>
+                                    <p class="text-outline text-xs mt-1 leading-normal">${film.why_it_fits}</p>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    <div class="bg-black/40 p-6 border border-white/5 rounded-sm">
+                        <h3 class="text-[10px] tracking-[0.3em] uppercase opacity-40 mb-3">Strategic Reasoning</h3>
+                        <p class="text-xs leading-relaxed opacity-70 italic font-light">${idea.reasoning}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
 </script>
-</body></html>
+
+</body>
+</html>
