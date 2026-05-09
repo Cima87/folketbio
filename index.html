@@ -3,7 +3,7 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>FOLKETS BIO AI ASSISTANT - PROCESSING</title>
+<title>FOLKETS BIO AI ASSISTANT</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Hanken+Grotesk:wght@400;600&amp;display=swap" rel="stylesheet"/>
@@ -98,69 +98,28 @@
     </script>
 <style>
         body {
-            background-color: #000000;
-            background-image:
+            background-color: #000000; /* Overriding for pure black cinematic feel */
+            background-image: 
                 linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 64px 64px;
         }
 
-        .letter-span {
-            display: inline-block;
-            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+        @keyframes bounce-sphere {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-40px) scale(0.95); }
+        }
+        
+        .bouncing-sphere {
+            animation: bounce-sphere 1.2s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
+        }
+        
+        .bouncing-sphere:nth-child(2) {
+            animation-delay: 0.15s;
         }
 
-        .animating-out {
-            opacity: 0;
-            transform: translateY(50px) scale(0) rotate(180deg) !important;
-            filter: blur(10px);
-        }
-
-        .glowing-sphere {
-            width: 40px;
-            height: 40px;
-            background-color: #e50914;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 30px 10px rgba(229, 9, 20, 0.6), inset 0 0 10px rgba(255,255,255,0.5);
-            opacity: 0;
-            z-index: 20;
-        }
-
-        @keyframes bounceLeft {
-            0%, 100% { transform: translate(-50%, -50%); }
-            50% { transform: translate(calc(-50% - 100px), -50%); }
-        }
-
-        @keyframes bounceRight {
-            0%, 100% { transform: translate(-50%, -50%); }
-            50% { transform: translate(calc(-50% + 100px), -50%); }
-        }
-
-        .sphere-active-left {
-            opacity: 1;
-            animation: bounceLeft 1.5s infinite ease-in-out;
-        }
-
-        .sphere-active-right {
-            opacity: 1;
-            animation: bounceRight 1.5s infinite ease-in-out;
-        }
-
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s forwards ease-out;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .letter-collapse {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
@@ -184,61 +143,27 @@
 <!-- Main Content Area -->
 <main class="flex-grow flex flex-col items-center justify-center relative px-margin-mobile md:px-margin-desktop">
 <!-- Center Stage -->
-<div class="flex flex-col items-center justify-center space-y-16 text-center max-w-4xl w-full z-10 transition-opacity duration-1000" id="center-stage">
+<div class="flex flex-col items-center justify-center space-y-16 text-center max-w-4xl w-full z-10 relative min-h-[400px]">
 <!-- Agentic Status Indicator -->
-<div class="flex items-center space-x-3 mb-8 transition-opacity duration-500" id="status-indicator">
-<div class="w-2 h-2 bg-primary-container rounded-full shadow-[0_0_10px_rgba(229,9,20,0.8)]" id="status-dot"></div>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.2em]" id="status-text">Processing Request...</span>
+<div class="flex items-center space-x-3 mb-8 transition-all duration-500" id="status-container">
+<div class="w-2 h-2 bg-primary-container rounded-full animate-pulse shadow-[0_0_10px_rgba(229,9,20,0.8)]" id="status-indicator"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.2em] transition-all duration-500" id="status-text">System Online</span>
 </div>
-<!-- Main Headline Container -->
-<div class="relative w-full h-[150px] flex items-center justify-center">
-<h1 class="font-headline-xl text-headline-xl md:text-[96px] text-primary-container drop-shadow-[0_0_15px_rgba(229,9,20,0.3)] absolute w-full flex flex-wrap justify-center" id="animated-headline">
-<!-- Javascript will wrap these in spans -->
-                    FOLKETS BIO AI ASSISTANT
-                </h1>
-<!-- Glowing Spheres for Processing State -->
-<div class="glowing-sphere" id="sphere-left"></div>
-<div class="glowing-sphere" id="sphere-right"></div>
+<!-- Main Headline -->
+<h1 class="font-headline-xl text-headline-xl md:text-[96px] text-primary-container drop-shadow-[0_0_15px_rgba(229,9,20,0.3)] letter-collapse absolute top-[120px] left-1/2 -translate-x-1/2 w-full" id="main-headline">
+                FOLKETS BIO AI ASSISTANT
+            </h1>
+<!-- Spheres Animation (Hidden Initially) -->
+<div class="hidden justify-center items-center gap-8 h-32 absolute top-[150px] left-1/2 -translate-x-1/2 opacity-0 transition-opacity duration-700" id="spheres-container">
+<div class="w-16 h-16 rounded-full bg-primary-container shadow-[0_0_40px_rgba(229,9,20,0.8)] bouncing-sphere relative after:absolute after:inset-0 after:rounded-full after:bg-white/20 after:blur-sm"></div>
+<div class="w-16 h-16 rounded-full bg-primary-container shadow-[0_0_40px_rgba(229,9,20,0.8)] bouncing-sphere relative after:absolute after:inset-0 after:rounded-full after:bg-white/20 after:blur-sm"></div>
 </div>
-<!-- Prompt Input / Primary Action Area (Hidden during processing) -->
-<div class="w-full max-w-2xl mt-12 relative group hidden" id="action-area">
-<button class="w-full bg-primary-container text-on-primary-container py-4 px-8 border border-primary-container rounded-none font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300 shadow-[0_0_20px_rgba(229,9,20,0.15)] group-hover:shadow-[0_0_30px_rgba(229,9,20,0.3)] flex items-center justify-center space-x-3">
+<!-- Prompt Input / Primary Action Area -->
+<div class="w-full max-w-2xl mt-[200px] relative group transition-all duration-500" id="action-container">
+<button class="w-full bg-primary-container text-on-primary-container py-4 px-8 border border-primary-container rounded-none font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary hover:border-primary transition-all duration-300 shadow-[0_0_20px_rgba(229,9,20,0.15)] group-hover:shadow-[0_0_30px_rgba(229,9,20,0.3)] flex items-center justify-center space-x-3" id="action-button">
 <span class="material-symbols-outlined text-[18px]">bolt</span>
 <span>Brainstorm programming ideas</span>
 </button>
-</div>
-</div>
-<!-- Results Area (Hidden initially) -->
-<div class="hidden flex-col items-center justify-start w-full max-w-4xl mt-12 z-10 fade-in-up pb-24" id="results-area">
-<div class="w-full bg-[#111] border border-white/10 p-8 relative shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-<div class="absolute top-0 left-0 w-2 h-full bg-primary-container shadow-[0_0_15px_rgba(229,9,20,0.5)]"></div>
-<h2 class="font-headline-md text-headline-md text-primary-container mb-6 tracking-wider">AGENT RESULTS LOG</h2>
-<div class="space-y-6 font-body-md text-on-surface/80 text-left">
-<div class="flex items-start gap-4">
-<span class="material-symbols-outlined text-primary-container mt-1">terminal</span>
-<div>
-<p class="font-label-sm text-primary-container mb-1 tracking-widest">TASK 01: IDEATION</p>
-<p>Generated 15 potential narrative structures focusing on recursive AI consciousness loops. Evaluated against Folkets Bio avant-garde criteria.</p>
-</div>
-</div>
-<div class="flex items-start gap-4">
-<span class="material-symbols-outlined text-primary-container mt-1">code</span>
-<div>
-<p class="font-label-sm text-primary-container mb-1 tracking-widest">TASK 02: SYNTHESIS</p>
-<p>Correlating historical neo-noir tropes with modern machine learning paradigms. Synthesizing script outlines.</p>
-</div>
-</div>
-<div class="flex items-start gap-4">
-<span class="material-symbols-outlined text-primary-container mt-1">check_circle</span>
-<div>
-<p class="font-label-sm text-primary-container mb-1 tracking-widest">STATUS: COMPLETE</p>
-<p>Drafting process finalized. Ready for human review.</p>
-</div>
-</div>
-</div>
-<button class="mt-8 border border-white/20 text-white/70 hover:text-white hover:border-white/50 px-6 py-2 font-label-sm uppercase tracking-widest transition-all duration-300" onclick="resetState()">
-                    Acknowledge &amp; Reset
-                </button>
 </div>
 </div>
 </main>
@@ -262,82 +187,38 @@
 </div>
 </footer>
 <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const headline = document.getElementById('animated-headline');
-            const text = headline.textContent.trim();
-            headline.textContent = '';
-            
-            // Wrap letters in spans for animation
-            const words = text.split(' ');
-            words.forEach((word, wordIndex) => {
-                const wordSpan = document.createElement('span');
-                wordSpan.className = 'whitespace-nowrap mx-2'; // Keep words together but spaced
-                
-                word.split('').forEach(char => {
-                    const span = document.createElement('span');
-                    span.textContent = char;
-                    span.className = 'letter-span';
-                    // Random initial slight transforms to make collapse look chaotic
-                    span.style.transform = `translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px) rotate(${Math.random() * 10 - 5}deg)`;
-                    wordSpan.appendChild(span);
-                });
-                
-                headline.appendChild(wordSpan);
-            });
+    document.getElementById('action-button').addEventListener('click', function() {
+        const actionContainer = document.getElementById('action-container');
+        const statusText = document.getElementById('status-text');
+        const statusIndicator = document.getElementById('status-indicator');
+        const mainHeadline = document.getElementById('main-headline');
+        const spheresContainer = document.getElementById('spheres-container');
 
-            // Start animation sequence immediately for the "Processing" state demo
-            startProcessingAnimation();
-        });
+        // Fade out button
+        actionContainer.classList.add('opacity-0', 'pointer-events-none');
+        
+        // Update Status
+        statusText.style.opacity = '0';
+        setTimeout(() => {
+            statusText.textContent = 'SYNTHESIZING NEURAL PATHWAYS...';
+            statusText.style.opacity = '1';
+            statusIndicator.classList.remove('animate-pulse');
+            statusIndicator.classList.add('animate-ping');
+        }, 300);
 
-        function startProcessingAnimation() {
-            const spans = document.querySelectorAll('.letter-span');
-            const sphereLeft = document.getElementById('sphere-left');
-            const sphereRight = document.getElementById('sphere-right');
-            const resultsArea = document.getElementById('results-area');
-            const statusDot = document.getElementById('status-dot');
-            const statusText = document.getElementById('status-text');
-
-            // 1. Collapse letters
-            spans.forEach((span, index) => {
-                setTimeout(() => {
-                    span.classList.add('animating-out');
-                }, Math.random() * 500); // Random delay up to 500ms
-            });
-
-            // 2. Show bouncing spheres after letters collapse
-            setTimeout(() => {
-                sphereLeft.classList.add('sphere-active-left');
-                sphereRight.classList.add('sphere-active-right');
-                
-                // Pulse status indicator faster
-                statusDot.classList.add('animate-ping');
-                statusText.textContent = "SYNTHESIZING NEURAL PATHWAYS...";
-                statusText.classList.add('animate-pulse');
-
-            }, 800);
-
-            // 3. Stop spheres and show results
-            setTimeout(() => {
-                sphereLeft.classList.remove('sphere-active-left');
-                sphereRight.classList.remove('sphere-active-right');
-                sphereLeft.style.opacity = '0';
-                sphereRight.style.opacity = '0';
-                
-                statusDot.classList.remove('animate-ping');
-                statusText.classList.remove('animate-pulse');
-                statusText.textContent = "PROCESS COMPLETE";
-                statusDot.style.backgroundColor = '#4caf50'; // Green for complete
-                statusDot.style.boxShadow = '0 0 10px rgba(76, 175, 80, 0.8)';
-
-                resultsArea.classList.remove('hidden');
-                resultsArea.classList.add('flex');
-                
-            }, 3500); // Wait 3.5s before showing results
-        }
-
-        // Just a helper to reload for testing the animation again easily
-        function resetState() {
-            window.location.reload();
-        }
-    </script>
+        // Collapse Headline
+        mainHeadline.classList.add('scale-y-0', 'opacity-0', 'blur-sm');
+        
+        // Show Spheres
+        setTimeout(() => {
+            mainHeadline.classList.add('hidden');
+            spheresContainer.classList.remove('hidden');
+            spheresContainer.classList.add('flex');
+            // Trigger reflow for transition
+            void spheresContainer.offsetWidth;
+            spheresContainer.classList.remove('opacity-0');
+            spheresContainer.classList.add('opacity-100');
+        }, 600);
+    });
+</script>
 </body></html>
