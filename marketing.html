@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ZITA MARKETING STUDIO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #050505; color: #e2e2e2; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .zita-red { color: #e50914; }
+        .bg-zita-red { background-color: #e50914; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="flex justify-between items-center mb-12 border-b border-white/10 pb-6">
+            <div>
+                <h1 class="text-3xl font-black tracking-tighter zita-red">ZITA <span class="text-white">MARKETING STUDIO</span></h1>
+                <p class="text-xs uppercase tracking-widest opacity-50 mt-1">Phase 2: Strategy & Visual Deployment</p>
+            </div>
+            <div id="status" class="text-[10px] px-3 py-1 rounded-full border border-white/20 opacity-50">READY FOR PAYLOAD</div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- LEFT: Strategy Display -->
+            <div class="lg:col-span-2 space-y-6">
+                <div id="strategy-container" class="glass rounded-2xl p-8 min-h-[400px]">
+                    <div id="empty-state" class="h-full flex flex-col items-center justify-center opacity-30 py-20 text-center">
+                        <svg class="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-width="1.5"></path></svg>
+                        <p>Paste approved event JSON to begin strategy session</p>
+                    </div>
+                    <div id="strategy-content" class="hidden space-y-8">
+                        <!-- Strategy Data will inject here -->
+                    </div>
+                </div>
+
+                <button id="generate-visuals-btn" class="hidden w-full bg-zita-red hover:bg-red-700 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl">
+                    <span>EXECUTE VISUAL CAMPAIGN (18 IMAGES)</span>
+                </button>
+            </div>
+
+            <!-- RIGHT: Controls & Chat -->
+            <div class="space-y-6">
+                <!-- Data Input -->
+                <div class="glass rounded-2xl p-6">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 mb-4 block">Input Approved JSON</label>
+                    <textarea id="json-input" class="w-full h-32 bg-black/40 border border-white/10 rounded-lg p-3 text-xs font-mono mb-4 focus:border-red-500 outline-none transition-colors" placeholder='{"ideas": [...]}'></textarea>
+                    <button id="init-btn" class="w-full bg-white text-black font-bold py-2 rounded text-xs uppercase tracking-wider hover:bg-zinc-200">Initialize Strategy</button>
+                </div>
+
+                <!-- Chat Bar -->
+                <div id="chat-container" class="glass rounded-2xl p-6 opacity-50 pointer-events-none transition-opacity">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 mb-4 block">Refine Strategy</label>
+                    <div id="chat-history" class="h-48 overflow-y-auto text-sm space-y-4 mb-4 pr-2">
+                        <!-- Chat log -->
+                    </div>
+                    <div class="relative">
+                        <input type="text" id="chat-input" class="w-full bg-black/40 border border-white/10 rounded-lg p-3 pr-10 text-sm focus:border-red-500 outline-none" placeholder="Suggest a different angle...">
+                        <button id="send-btn" class="absolute right-2 top-2 p-1 zita-red">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const sessionId = 'mkt-' + Math.random().toString(36).substr(2, 9);
+        const webhookUrl = 'https://cima87.app.n8n.cloud/webhook/trigger-zita-marketing'; // Strategy Webhook
+        const visualWebhookUrl = 'https://cima87.app.n8n.cloud/webhook/generate-zita-visuals'; // Image Webhook
+
+        const initBtn = document.getElementById('init-btn');
+        const sendBtn = document.getElementById('send-btn');
+        const jsonInput = document.getElementById('json-input');
+        const chatInput = document.getElementById('chat-input');
+        const strategyContent = document.getElementById('strategy-content');
+        const emptyState = document.getElementById('empty-state');
+        const chatContainer = document.getElementById('chat-container');
+        const visualBtn = document.getElementById('generate-visuals-btn');
+
+        initBtn.addEventListener('click', () => {
+            try {
+                const data = JSON.parse(jsonInput.value);
+                callMarketingAgent("Develop marketing strategy for these events.", data);
+                initBtn.disabled = true;
+                initBtn.innerText = "Processing...";
+            } catch (e) { alert("Invalid JSON format"); }
+        });
+
+        sendBtn.addEventListener('click', () => {
+            const val = chatInput.value.trim();
+            if(val) {
+                callMarketingAgent(val);
+                chatInput.value = '';
+            }
+        });
+
+        async function callMarketingAgent(prompt, eventData = null) {
+            updateStatus("THINKING...");
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input: prompt, approved_events: eventData, sessionId: sessionId })
+                });
+                const data = await response.json();
+                renderStrategy(data);
+                updateStatus("STRATEGY UPDATED");
+                chatContainer.classList.remove('opacity-50', 'pointer-events-none');
+                emptyState.classList.add('hidden');
+                strategyContent.classList.remove('hidden');
+                visualBtn.classList.remove('hidden');
+            } catch (e) { updateStatus("ERROR"); }
+        }
+
+        function renderStrategy(data) {
+            // Your logic to display the reasoning, campaign info, and captions
+            strategyContent.innerHTML = `
+                <section>
+                    <h3 class="zita-red text-xs font-bold tracking-widest mb-4 uppercase">Strategic Reasoning</h3>
+                    <p class="text-lg font-light leading-relaxed">${data.strategy_reasoning}</p>
+                </section>
+                <div class="h-px bg-white/10"></div>
+                <section>
+                    <h3 class="zita-red text-xs font-bold tracking-widest mb-4 uppercase">SoMe Campaign Strategy</h3>
+                    <p class="text-sm opacity-80 leading-relaxed">${data.some_campaign_explanation}</p>
+                </section>
+            `;
+            // Add messages to chat history
+            if(data.agent_message) {
+                const msg = document.createElement('div');
+                msg.className = "p-3 glass rounded-lg italic text-white/70";
+                msg.innerText = data.agent_message;
+                document.getElementById('chat-history').appendChild(msg);
+            }
+        }
+
+        function updateStatus(text) { document.getElementById('status').innerText = text; }
+    </script>
+</body>
+</html>
