@@ -211,10 +211,16 @@
         const cardsHTML = data.ideas.map(idea => {
             const films = (idea.film_recommendations && idea.film_recommendations.length > 0) 
                 ? idea.film_recommendations.map(film => `
-                    <li class="text-sm">
-                        <span class="text-primary-container font-bold mr-2">/</span>
-                        <strong class="uppercase text-white tracking-wider">${film.title}</strong>
-                        <p class="text-outline text-xs mt-1 leading-normal font-light">${film.why_it_fits}</p>
+                    <li class="mb-5">
+                        <h4 class="text-white font-bold tracking-wider uppercase text-base mb-1">
+                            <span class="text-primary-container mr-1">/</span> ${film.title}
+                        </h4>
+                        <div class="text-white text-sm capitalize mb-1 font-medium">
+                            ${film.director || 'Unknown Director'}, ${film.year || 'Unknown Year'}
+                        </div>
+                        <p class="text-outline text-xs mt-1 leading-normal font-light">
+                            ${film.why_it_fits}
+                        </p>
                     </li>
                 `).join('') 
                 : '<li class="text-xs opacity-50 italic">Awaiting Film Expert analysis...</li>';
@@ -265,6 +271,7 @@
             behavior: 'smooth' 
         });
     }
+    
     function appendUserMessage(msg) {
         const div = document.createElement('div');
         div.className = "chat-msg flex justify-end mb-8 mt-12";
